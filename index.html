@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <title>Shopping Cart</title>
+  </head>
+  <body>
+    <h1>Let's do some shopping, world!</h1>
+
+    <div class="container">
+      <div class="row">
+
+      </div>
+    </div>
+
+    <!-- You may have to use this on a button or something soon but to remove card try onclick="this.parentNode.parentNode.removeChild(this.parentNode)" -->
+
+    <hr>
+
+    <div class="container">
+        <h3>
+            Cart
+        </h3>
+    </div>
+
+    <script>
+      let books = [];
+
+      const row = document.querySelector(".row");
+
+      /* const changeStyle = () => {
+        document.getElementById("myDIV").classList.add("mystyle");
+      } */
+      
+      
+
+      window.onload = () => {
+        fetch("https://striveschool-api.herokuapp.com/books")
+          .then((response) => response.json())
+          .then((allProducts) => {
+            books = allProducts;
+            displayProducts(allProducts);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        function displayProducts(allProducts) {
+          row.innerHTML = allProducts
+            .map(
+              (books) => `
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="card">
+                        <img src="${books.img}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">${books.title}</h5>
+                        <p class="card-text">${books.price}</p>
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            `
+            )
+            .join("");
+        }
+
+        function cartItem () {
+            displayProducts()
+        }
+
+      };
+    </script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
